@@ -13,4 +13,7 @@ public interface UserDao extends CrudRepository<UserModel,Integer> {
 
     @Query(value = "SELECT `id`, `address`, `email`, `name`, `password`, `phone`, `username` FROM `user` WHERE `username`= :username",nativeQuery = true)
     List<UserModel> FindUser(@Param("username") String username);
+
+    @Query(value = "SELECT `id`, `address`, `email`, `name`, `password`, `phone`, `username` FROM `user` WHERE `id`= :id",nativeQuery = true)
+    List<UserModel> FindUserById(@Param("id") String id);
 }
