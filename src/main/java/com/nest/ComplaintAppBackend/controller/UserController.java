@@ -45,4 +45,11 @@ public class UserController {
         return hm;
     }
 
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/userById", consumes = "application/json", produces = "application/json")
+    public List<UserModel> FindUserById(@RequestBody UserModel um){
+        List<UserModel> result = (List<UserModel>) udao.FindUserById(String.valueOf(um.getId()));
+        return result;
+    }
+
 }
