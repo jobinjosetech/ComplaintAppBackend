@@ -3,10 +3,7 @@ package com.nest.ComplaintAppBackend.controller;
 import com.nest.ComplaintAppBackend.dao.UserDao;
 import com.nest.ComplaintAppBackend.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,11 +13,12 @@ public class UserController {
     @Autowired
     private UserDao udao;
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/")
     public String HomePage(){
         return "Welcome Page";
     }
-
+    @CrossOrigin(origins = "*")
     @PostMapping(path = "/userReg", consumes = "application/json", produces = "application/json")
     public HashMap<String, String> UserRegistration(@RequestBody UserModel um){
         HashMap<String, String> hm = new HashMap<>();
@@ -33,7 +31,7 @@ public class UserController {
         }
         return hm;
     }
-
+    @CrossOrigin(origins = "*")
     @PostMapping(path = "/userLogin", consumes = "application/json", produces = "application/json")
     public HashMap<String, String> UserLogin(@RequestBody UserModel um){
         List<UserModel> result = (List<UserModel>) udao.UserLogin(um.getUsername(), um.getPassword());
@@ -42,6 +40,7 @@ public class UserController {
             hm.put("status","failed");
         }else{
             hm.put("status","success");
+            hm.put("userId",String.valueOf(result.get(0).getId()));
         }
         return hm;
     }
